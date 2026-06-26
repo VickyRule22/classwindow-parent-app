@@ -19,6 +19,7 @@ import { AppHeader } from './src/components/AppHeader';
 import { BottomNav, TabKey } from './src/components/BottomNav';
 import { ScreenTransition } from './src/components/ScreenTransition';
 import { ReportModal } from './src/components/ReportModal';
+import { OnboardingFlow } from './src/onboarding/OnboardingFlow';
 import { FeedScreen } from './src/screens/FeedScreen';
 import { ClassesScreen } from './src/screens/ClassesScreen';
 import { WishlistsScreen } from './src/screens/WishlistsScreen';
@@ -28,6 +29,8 @@ import { colors } from './src/theme';
 const TAB_ORDER: TabKey[] = ['feed', 'classes', 'wishlists', 'profile'];
 
 export default function App() {
+  // The sign-up flow plays first; "Continue to Class Window" drops into the app.
+  const [onboarded, setOnboarded] = useState(false);
   const [tab, setTab] = useState<TabKey>('feed');
   const [direction, setDirection] = useState(1);
   const [reportOpen, setReportOpen] = useState(false);
@@ -57,6 +60,19 @@ export default function App() {
 
   if (!fontsLoaded) {
     return <View style={{ flex: 1, backgroundColor: colors.appBg }} />;
+  }
+
+  if (!onboarded) {
+    return (
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+          <StatusBar style="dark" />
+          <View style={styles.phone}>
+            <OnboardingFlow onDone={() => setOnboarded(true)} />
+          </View>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    );
   }
 
   return (
