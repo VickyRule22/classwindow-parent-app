@@ -22,7 +22,7 @@
       "favicon": "./assets/favicon.png"
     },
     "experiments": {
-      "baseUrl": "/classwindow-parent-app"
+      "baseUrl": "/Class-Window-Parents"
     },
     "plugins": [
       "expo-font"

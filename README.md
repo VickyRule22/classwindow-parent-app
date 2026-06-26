@@ -1,4 +1,6 @@
-# Class Window, Parent App (Beta) prototype
+# Class-Window-Parents
+
+Class Window, Parent App (Beta) prototype.
 
 A beautiful, non-functional React Native + Expo prototype of the Class Window
 parent experience. Text, color, type, the logo, and the wishlist illustration
@@ -11,10 +13,12 @@ interactive, but nothing talks to a backend.
 ## Live link
 
 Click through it on the web (no install):
-**https://vickyrule22.github.io/classwindow-parent-app/**
+**https://vickyrule22.github.io/Class-Window-Parents/**
 
 (Hosted on GitHub Pages, set to `noindex` so it stays out of search results.
-To re-deploy after changes, see "Re-deploy" below.)
+This is a standalone side project, deliberately NOT part of the
+sales-command-center / codeandtrust.com deploy pipeline. To re-deploy after
+changes, see "Re-deploy" below.)
 
 ## Screens
 
