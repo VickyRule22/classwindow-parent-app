@@ -5,8 +5,16 @@ parent experience. Text, color, type, the logo, and the wishlist illustration
 are lifted directly from the Figma source (Class Window Mobile App, "Parent App -
 Beta" frame, node 187:2242) so it matches pixel for pixel.
 
-This is a visual prototype: tabs and the report flow are interactive, but nothing
-talks to a backend.
+This is a visual prototype: tabs, the like button, and the report flow are
+interactive, but nothing talks to a backend.
+
+## Live link
+
+Click through it on the web (no install):
+**https://vickyrule22.github.io/classwindow-parent-app/**
+
+(Hosted on GitHub Pages, set to `noindex` so it stays out of search results.
+To re-deploy after changes, see "Re-deploy" below.)
 
 ## Screens
 
@@ -37,6 +45,15 @@ npx expo start --web
 Note: run each line on its own. Don't paste a line with a trailing
 `# comment` into zsh, it treats the `#` as an argument and Expo errors with
 "Invalid project root".
+
+## Re-deploy
+
+```bash
+npx expo export -p web
+cd dist && touch .nojekyll && cp index.html 404.html
+printf 'User-agent: *\nDisallow: /\n' > robots.txt
+# add the noindex meta to index.html, then push dist to the gh-pages branch
+```
 
 ## Design tokens
 
