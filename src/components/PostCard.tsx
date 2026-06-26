@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Pressable, Animated, StyleSheet } from 'react-native';
+import { View, Text, Image, Pressable, Animated, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Avatar } from './Avatar';
 import { colors, font, shadowCard } from '../theme';
@@ -38,7 +38,7 @@ export function PostCard({ post, onReport }: { post: Post; onReport: () => void 
 
       {/* image */}
       <View style={[styles.image, { backgroundColor: post.imageColor }]}>
-        <Text style={styles.imageEmoji}>{post.emoji}</Text>
+        <Image source={post.image} style={styles.photo} resizeMode="cover" />
       </View>
 
       {/* caption */}
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   time: { fontFamily: font.semibold, fontSize: 11, color: colors.textMuted, opacity: 0.8 },
   dots: { paddingLeft: 2 },
   image: { height: 269, alignItems: 'center', justifyContent: 'center' },
-  imageEmoji: { fontSize: 72, opacity: 0.55 },
+  photo: { width: '100%', height: '100%' },
   captionWrap: { paddingHorizontal: 16, paddingVertical: 12 },
   caption: { fontFamily: font.semibold, fontSize: 14, color: colors.caption, lineHeight: 20 },
   reactions: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 12, flexDirection: 'row' },

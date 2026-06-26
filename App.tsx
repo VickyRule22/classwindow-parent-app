@@ -31,11 +31,18 @@ export default function App() {
   const [tab, setTab] = useState<TabKey>('feed');
   const [direction, setDirection] = useState(1);
   const [reportOpen, setReportOpen] = useState(false);
+  const [feedFilter, setFeedFilter] = useState('all');
 
   const changeTab = (next: TabKey) => {
     if (next === tab) return;
     setDirection(TAB_ORDER.indexOf(next) > TAB_ORDER.indexOf(tab) ? 1 : -1);
     setTab(next);
+  };
+
+  // tapping a class card jumps to the feed, filtered to that class
+  const openClass = (key: string) => {
+    setFeedFilter(key);
+    changeTab('feed');
   };
 
   const [fontsLoaded] = useFonts({
@@ -60,8 +67,14 @@ export default function App() {
           <AppHeader />
           <View style={styles.screen}>
             <ScreenTransition transitionKey={tab} direction={direction}>
-              {tab === 'feed' && <FeedScreen onReport={() => setReportOpen(true)} />}
-              {tab === 'classes' && <ClassesScreen />}
+              {tab === 'feed' && (
+                <FeedScreen
+                  onReport={() => setReportOpen(true)}
+                  filter={feedFilter}
+                  onFilterChange={setFeedFilter}
+                />
+              )}
+              {tab === 'classes' && <ClassesScreen onOpenClass={openClass} />}
               {tab === 'wishlists' && <WishlistsScreen />}
               {tab === 'profile' && <ProfileScreen />}
             </ScreenTransition>

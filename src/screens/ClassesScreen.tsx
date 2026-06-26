@@ -5,7 +5,7 @@ import { ClassCard } from '../components/ClassCard';
 import { classes } from '../data';
 import { colors, font, shadowSoft } from '../theme';
 
-export function ClassesScreen() {
+export function ClassesScreen({ onOpenClass }: { onOpenClass: (key: string) => void }) {
   return (
     <ScrollView
       style={{ backgroundColor: colors.appBg }}
@@ -21,7 +21,7 @@ export function ClassesScreen() {
         <Text style={styles.sectionLabel}>LINCOLN ELEMENTARY</Text>
         <View style={{ gap: 10 }}>
           {classes.map((c) => (
-            <ClassCard key={c.id} row={c} />
+            <ClassCard key={c.id} row={c} onPress={() => onOpenClass(c.initials)} />
           ))}
         </View>
 

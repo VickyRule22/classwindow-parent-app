@@ -1,3 +1,4 @@
+import type { ImageSourcePropType } from 'react-native';
 import { avatarGradients, colors } from './theme';
 
 export type Post = {
@@ -7,8 +8,8 @@ export type Post = {
   name: string;
   meta: string;
   time: string;
-  imageColor: string;
-  emoji: string;
+  imageColor: string; // shown behind the photo while it loads
+  image: ImageSourcePropType;
   caption: string;
   likes: number;
   liked: boolean;
@@ -24,7 +25,7 @@ export const posts: Post[] = [
     meta: '2nd Grade · Room 14',
     time: '2h ago',
     imageColor: colors.postPeach,
-    emoji: '🔬',
+    image: require('../assets/figma/posts/science.png'),
     caption:
       "Our Science Fair projects are really coming together! 🔬 Today we explored how plants grow toward light, every student had a prediction, and almost all of them were right.",
     likes: 15,
@@ -38,7 +39,7 @@ export const posts: Post[] = [
     meta: 'PE · Gym & Field',
     time: 'Yesterday',
     imageColor: colors.postGreen,
-    emoji: '🏃',
+    image: require('../assets/figma/posts/fieldday.png'),
     caption:
       "Field Day was an absolute blast today! 🏃‍♀️ Every student gave 100%, we had relay races, tug of war, and the sack race was legendary. The teamwork made this PE teacher's heart full.",
     likes: 14,
@@ -52,12 +53,21 @@ export const posts: Post[] = [
     meta: 'Art · Studio 3',
     time: '2 days ago',
     imageColor: colors.postBlue,
-    emoji: '🌻',
+    image: require('../assets/figma/posts/sunflowers.png'),
     caption:
       "Sunflower gallery week is officially open! 🌻 Every student created their own watercolor interpretation, no two are alike. We'll be displaying these in the hallway all month.",
     likes: 14,
     liked: false,
   },
+];
+
+// Feed filter pills. `key` 'all' shows everything; otherwise it matches a
+// post/class by avatar initials (SJ / RP / MR).
+export const feedFilters: { key: string; label: string }[] = [
+  { key: 'all', label: 'All Classes' },
+  { key: 'SJ', label: 'Mrs. Johnson · 2nd' },
+  { key: 'RP', label: 'Mr. Patel · PE' },
+  { key: 'MR', label: 'Ms. Rivera · Art' },
 ];
 
 export type ClassRow = {

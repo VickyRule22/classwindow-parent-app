@@ -2,17 +2,25 @@ import React from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { PostCard } from '../components/PostCard';
-import { posts } from '../data';
+import { posts, feedFilters } from '../data';
 import { colors, font } from '../theme';
 
-const FILTERS = [
-  { label: 'All Classes', active: true },
-  { label: 'Mrs. Johnson · 2nd', active: false },
-  { label: 'Mr. Patel · PE', active: false },
-  { label: 'Ms. Rivera · Art', active: false },
-];
+export function FeedScreen({
+  onReport,
+  filter,
+  onFilterChange,
+}: {
+  onReport: () => void;
+  filter: string;
+  onFilterChange: (key: string) => void;
+}) {
+  const visible = filter === 'all' ? posts : posts.filter((p) => p.initials === filter);
+  const activeLabel = feedFilters.find((f) => f.key === filter)?.label ?? '';
+  const subtitle =
+    filter === 'all'
+      ? "3 new moments from your kids' classrooms"
+      : `${visible.length} ${visible.length === 1 ? 'moment' : 'moments'} from ${activeLabel.split(' ·')[0]}`;
 
-export function FeedScreen({ onReport }: { onReport: () => void }) {
   return (
     <ScrollView
       style={{ backgroundColor: colors.appBg }}
@@ -22,7 +30,7 @@ export function FeedScreen({ onReport }: { onReport: () => void }) {
       {/* greeting */}
       <View style={styles.greeting}>
         <Text style={styles.hi}>Good morning ☀️</Text>
-        <Text style={styles.sub}>3 new moments from your kids' classrooms</Text>
+        <Text style={styles.sub}>{subtitle}</Text>
       </View>
 
       {/* filter pills */}
@@ -31,26 +39,25 @@ export function FeedScreen({ onReport }: { onReport: () => void }) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.filterRow}
       >
-        {FILTERS.map((f) => (
-          <View
-            key={f.label}
-            style={[styles.pill, f.active ? styles.pillActive : styles.pillInactive]}
-          >
-            <Text
-              style={[
-                styles.pillTxt,
-                { color: f.active ? colors.white : colors.textMuted },
-              ]}
+        {feedFilters.map((f) => {
+          const active = f.key === filter;
+          return (
+            <Pressable
+              key={f.key}
+              onPress={() => onFilterChange(f.key)}
+              style={[styles.pill, active ? styles.pillActive : styles.pillInactive]}
             >
-              {f.label}
-            </Text>
-          </View>
-        ))}
+              <Text style={[styles.pillTxt, { color: active ? colors.white : colors.textMuted }]}>
+                {f.label}
+              </Text>
+            </Pressable>
+          );
+        })}
       </ScrollView>
 
       {/* posts */}
       <View style={styles.feed}>
-        {posts.map((p) => (
+        {visible.map((p) => (
           <PostCard key={p.id} post={p} onReport={onReport} />
         ))}
 

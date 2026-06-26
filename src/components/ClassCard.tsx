@@ -1,13 +1,23 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, Pressable, Animated, StyleSheet } from 'react-native';
 import { Avatar } from './Avatar';
 import { colors, font, shadowSoft } from '../theme';
 import type { ClassRow } from '../data';
 
-export function ClassCard({ row }: { row: ClassRow }) {
+export function ClassCard({ row, onPress }: { row: ClassRow; onPress?: () => void }) {
+  const scale = useRef(new Animated.Value(1)).current;
+  const spring = (to: number) =>
+    Animated.spring(scale, { toValue: to, useNativeDriver: true, friction: 7, tension: 300 }).start();
+
   return (
-    <View style={styles.card}>
-      <View style={styles.top}>
+    <Animated.View style={{ transform: [{ scale }] }}>
+    <Pressable
+      style={styles.card}
+      onPress={onPress}
+      onPressIn={() => spring(0.97)}
+      onPressOut={() => spring(1)}
+    >
+      <Animated.View style={styles.top}>
         <Avatar initials={row.initials} gradient={row.gradient} size={42} fontSize={16} />
         <View style={styles.info}>
           <Text style={styles.name}>{row.name}</Text>
@@ -17,13 +27,14 @@ export function ClassCard({ row }: { row: ClassRow }) {
         <View style={styles.badge}>
           <Text style={styles.badgeTxt}>{row.unread}</Text>
         </View>
-      </View>
+      </Animated.View>
       <View style={styles.divider} />
       <View style={styles.bottom}>
         <Text style={styles.last}>{row.lastPost}</Text>
         <Text style={styles.view}>View class →</Text>
       </View>
-    </View>
+    </Pressable>
+    </Animated.View>
   );
 }
 
