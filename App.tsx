@@ -18,6 +18,7 @@ import {
 import { AppHeader } from './src/components/AppHeader';
 import { DeviceFrame } from './src/components/DeviceFrame';
 import { BottomNav, TabKey } from './src/components/BottomNav';
+import { Role } from './src/components/RoleSwitcher';
 import { ScreenTransition } from './src/components/ScreenTransition';
 import { ReportModal } from './src/components/ReportModal';
 import { OnboardingFlow } from './src/onboarding/OnboardingFlow';
@@ -36,6 +37,7 @@ export default function App() {
   const [direction, setDirection] = useState(1);
   const [reportOpen, setReportOpen] = useState(false);
   const [feedFilter, setFeedFilter] = useState('all');
+  const [role, setRole] = useState<Role>('parent');
 
   const changeTab = (next: TabKey) => {
     if (next === tab) return;
@@ -55,6 +57,7 @@ export default function App() {
     setTab('feed');
     setFeedFilter('all');
     setReportOpen(false);
+    setRole('parent');
   };
 
   const [fontsLoaded] = useFonts({
@@ -80,7 +83,7 @@ export default function App() {
             <OnboardingFlow onDone={() => setOnboarded(true)} />
           ) : (
             <>
-              <AppHeader />
+              <AppHeader role={role} onRolePress={() => changeTab('profile')} />
               <View style={styles.screen}>
                 <ScreenTransition transitionKey={tab} direction={direction}>
                   {tab === 'feed' && (
@@ -92,7 +95,9 @@ export default function App() {
                   )}
                   {tab === 'classes' && <ClassesScreen onOpenClass={openClass} />}
                   {tab === 'wishlists' && <WishlistsScreen />}
-                  {tab === 'profile' && <ProfileScreen onSignOut={signOut} />}
+                  {tab === 'profile' && (
+                <ProfileScreen onSignOut={signOut} role={role} onRoleChange={setRole} />
+              )}
                 </ScreenTransition>
               </View>
               <BottomNav active={tab} onChange={changeTab} />

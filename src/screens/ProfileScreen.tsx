@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Avatar } from '../components/Avatar';
+import { RoleSwitcher, Role } from '../components/RoleSwitcher';
 import { colors, font, shadowSoft } from '../theme';
 
 const ACCOUNT_ROWS = [
@@ -11,7 +12,15 @@ const ACCOUNT_ROWS = [
   { icon: '⭐', label: 'Give Feedback' },
 ];
 
-export function ProfileScreen({ onSignOut }: { onSignOut: () => void }) {
+export function ProfileScreen({
+  onSignOut,
+  role,
+  onRoleChange,
+}: {
+  onSignOut: () => void;
+  role: Role;
+  onRoleChange: (r: Role) => void;
+}) {
   const [notify, setNotify] = useState(true);
 
   return (
@@ -37,6 +46,9 @@ export function ProfileScreen({ onSignOut }: { onSignOut: () => void }) {
             <Text style={styles.editTxt}>Edit</Text>
           </View>
         </View>
+
+        {/* role switch (parent / teacher) */}
+        <RoleSwitcher role={role} onChange={onRoleChange} />
 
         {/* notifications */}
         <View style={styles.section}>
