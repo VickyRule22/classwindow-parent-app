@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Pressable, Animated, Easing, StyleSheet, Modal } from 'react-native';
+import { View, Text, Pressable, Animated, Easing, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, font } from '../theme';
 
@@ -41,14 +41,15 @@ export function ReportModal({ visible, onClose }: { visible: boolean; onClose: (
   const sheetTranslate = anim.interpolate({ inputRange: [0, 1], outputRange: [440, 0] });
   const backdropOpacity = anim.interpolate({ inputRange: [0, 1], outputRange: [0, 1], extrapolate: 'clamp' });
 
+  if (!mounted) return null;
+
   return (
-    <Modal visible={mounted} transparent animationType="none" onRequestClose={close}>
-      <View style={styles.overlay}>
-        <Animated.View
-          style={[StyleSheet.absoluteFill, styles.backdrop, { opacity: backdropOpacity }]}
-        />
-        <Pressable style={StyleSheet.absoluteFill} onPress={close} />
-        <Animated.View style={[styles.sheet, { transform: [{ translateY: sheetTranslate }] }]}>
+    <View style={[StyleSheet.absoluteFill, styles.overlay]}>
+      <Animated.View
+        style={[StyleSheet.absoluteFill, styles.backdrop, { opacity: backdropOpacity }]}
+      />
+      <Pressable style={StyleSheet.absoluteFill} onPress={close} />
+      <Animated.View style={[styles.sheet, { transform: [{ translateY: sheetTranslate }] }]}>
           {step === 0 ? (
             <>
               <View style={styles.header}>
@@ -114,9 +115,8 @@ export function ReportModal({ visible, onClose }: { visible: boolean; onClose: (
               </View>
             </>
           )}
-        </Animated.View>
-      </View>
-    </Modal>
+      </Animated.View>
+    </View>
   );
 }
 

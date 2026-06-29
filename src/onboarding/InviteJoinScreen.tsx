@@ -40,7 +40,7 @@ export function InviteJoinScreen({
       <StatusBar tint="light" />
 
       <View style={styles.logoSection}>
-        <Logomark size={52} />
+        <Logomark size={52} color="#e9e2da" />
         <Text style={styles.wordmark}>Class Window</Text>
       </View>
 

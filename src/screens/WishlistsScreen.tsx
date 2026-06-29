@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { colors, font } from '../theme';
 
-// Empty state: friendly illustration + "Wishlists Coming Soon!" (orange), per Figma.
+// Empty state: animated hi-five illustration + "Wishlists Coming Soon!" (orange).
 export function WishlistsScreen() {
   return (
     <View style={styles.wrap}>
       <View style={styles.center}>
         <Image
-          source={require('../../assets/figma/wishlist-illustration.png')}
+          source={require('../../assets/figma/wishlist-animation.gif')}
           style={styles.art}
           resizeMode="contain"
         />
@@ -23,7 +23,7 @@ export function WishlistsScreen() {
 const styles = StyleSheet.create({
   wrap: { flex: 1, backgroundColor: colors.appBg, paddingHorizontal: 16 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 24 },
-  art: { width: 222, height: 222 },
+  art: { width: 248, height: 248 },
   title: {
     fontFamily: font.heading,
     fontSize: 26,
